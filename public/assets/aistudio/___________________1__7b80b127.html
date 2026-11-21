@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ตารางนัดคลินิกนวด</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef4fb;--sf:#fff;--ink:#0f2742;--mu:#5b7390;--ln:#d5e2f1;--br:#1d5fd1;--brd:#123f94;--soft:#e3eeff;--ok:#0f8a5f;--no:#c23b4a;--on:#fff;color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1727;--sf:#12233a;--ink:#e6eefb;--mu:#93a9c6;--ln:#243a57;--br:#5b97ff;--brd:#9dc0ff;--soft:#17325a;--ok:#3fcf9b;--no:#ff7a8a;--on:#06152b;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b1727;--sf:#12233a;--ink:#e6eefb;--mu:#93a9c6;--ln:#243a57;--br:#5b97ff;--brd:#9dc0ff;--soft:#17325a;--ok:#3fcf9b;--no:#ff7a8a;--on:#06152b;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "IBM Plex Sans Thai",system-ui,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--br);outline-offset:2px}
+header{background:var(--br);color:var(--on);padding:14px 20px 0}
+.hd{max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+h1{font-size:20px;margin:0;font-weight:700}
+nav{max-width:1180px;margin:10px auto 0;display:flex;gap:4px;overflow-x:auto}
+nav button{background:none;border:0;color:var(--on);opacity:.75;padding:10px 16px;border-radius:10px 10px 0 0;font-weight:500;white-space:nowrap}
+nav button.on{background:var(--bg);color:var(--ink);opacity:1;font-weight:600}
+main{max-width:1180px;margin:auto;padding:18px 16px 40px}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:16px}
+.wrap{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(300px,1fr);gap:16px;align-items:start}
+@media(max-width:860px){.wrap{grid-template-columns:1fr}}
+.bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.bar h2{margin:0;font-size:19px;flex:1;min-width:140px}
+.btn{border:1px solid var(--ln);background:var(--sf);border-radius:9px;padding:7px 13px;font-weight:500}
+.btn:hover{background:var(--soft)}
+.pri{background:var(--br);border-color:var(--br);color:var(--on)}
+.pri:hover{background:var(--brd);color:var(--on)}
+.dng{color:var(--no);border-color:var(--no)}
+.sum{display:flex;gap:16px;flex-wrap:wrap;color:var(--mu);font-size:13.5px;margin-bottom:10px}
+.sum b{color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.dn{text-align:center;color:var(--mu);font-size:13px;padding:4px 0;font-weight:600}
+.dn:first-child{color:var(--no)}
+.cell{min-height:92px;background:var(--bg);border:1px solid transparent;border-radius:9px;padding:5px;text-align:left;display:flex;flex-direction:column;gap:2px;overflow:hidden}
+.cell:hover{border-color:var(--br)}
+.cell.out{opacity:.45}
+.cell.sel{background:var(--soft);border-color:var(--br);box-shadow:inset 0 0 0 1px var(--br)}
+.cell .n{font-weight:600;font-size:13px;width:24px;height:24px;display:grid;place-items:center;border-radius:50%}
+.cell.today .n{background:var(--br);color:var(--on)}
+.chip{font-size:11.5px;line-height:1.35;padding:2px 6px;background:var(--c);color:#fff;font-weight:500;border-radius:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chip.x{text-decoration:line-through;opacity:.5}
+.more{font-size:11px;color:var(--mu)}
+.cnt{display:none;margin:auto 0 0;align-self:center;background:var(--br);color:var(--on);border-radius:99px;font-size:11px;padding:0 7px;font-weight:600}
+@media(max-width:700px){.chip,.more{display:none}.cell{min-height:56px;align-items:center}.cell.has .cnt{display:block}}
+.ap{display:block;width:100%;text-align:left;background:var(--bg);border:1px solid var(--ln);border-left:10px solid var(--c);border-radius:10px;padding:10px 12px;margin-bottom:8px}
+.ap:hover{border-color:var(--br);border-left-color:var(--c)}
+.ap .t{display:flex;justify-content:space-between;gap:8px;font-weight:600}
+.ap .s{color:var(--mu);font-size:13px}
+.tag{font-size:12px;padding:1px 9px;border-radius:99px;background:var(--soft);color:var(--brd);font-weight:500}
+.tag.ok{background:color-mix(in srgb,var(--ok) 18%,transparent);color:var(--ok)}
+.tag.no{background:color-mix(in srgb,var(--no) 16%,transparent);color:var(--no)}
+.tot{display:flex;justify-content:space-between;border-top:1px solid var(--ln);padding-top:10px;margin-top:6px;font-weight:600}
+.emp{color:var(--mu);text-align:center;padding:24px 0}
+.row{display:flex;align-items:center;gap:12px;padding:11px 4px;border-bottom:1px solid var(--ln)}
+.row:last-child{border:0}
+.row .g{flex:1;min-width:0}
+.row .s{color:var(--mu);font-size:13px}
+.dot{width:24px;height:24px;border-radius:50%;background:var(--c);flex:none}
+input,select,textarea{width:100%;background:var(--sf);border:1px solid var(--ln);border-radius:9px;padding:8px 10px}
+label{display:block;font-size:13px;color:var(--mu);margin:10px 0 3px;font-weight:500}
+dialog{border:0;border-radius:16px;padding:0;width:min(520px,94vw);max-height:92vh;background:var(--sf);color:var(--ink);box-shadow:0 20px 60px rgba(8,25,55,.35)}
+dialog::backdrop{background:rgba(8,25,55,.5)}
+.dl{padding:18px 20px;overflow:auto;max-height:92vh}
+.dl h3{margin:0 0 4px;font-size:18px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sv{display:flex;align-items:center;gap:8px;padding:6px 8px;border:1px solid var(--ln);border-radius:9px;margin-bottom:5px;cursor:pointer;color:var(--ink);font-size:14px;margin-top:0}
+.sv input{width:auto}
+.sv span{flex:1}
+.calc{background:var(--soft);border-radius:10px;padding:10px 12px;margin-top:12px;font-size:14px}
+.calc div{display:flex;justify-content:space-between}
+.calc .g{font-size:18px;font-weight:700;color:var(--brd);border-top:1px solid var(--ln);margin-top:5px;padding-top:5px}
+.warn{color:var(--no);font-size:13px;margin-top:6px}
+.act{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
+.act .l{margin-right:auto}
+.tp{display:inline-block;background:var(--c);color:#fff;border-radius:99px;padding:1px 11px;font-size:12.5px;font-weight:600}.lg{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.fpr{width:92px!important;text-align:right;padding:4px 8px!important}.lg{gap:8px}.rv{display:flex;flex-direction:column;gap:3px;align-items:flex-start;background:var(--bg);border:1px solid var(--ln);border-radius:10px;padding:8px 12px;min-width:118px;flex:1}.rv b{font-size:17px}.rv small{color:var(--mu)}.rr{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:13.5px}.rr b{margin-left:auto}
+</style>
+</head>
+<body>
+<header><div class="hd"><h1>ตารางนัดคลินิกนวด</h1><span id="hs" style="font-size:13px;opacity:.85"></span></div>
+<nav id="nav"></nav></header>
+<main id="main"></main>
+<dialog id="dlg"><div class="dl" id="dl"></div></dialog>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const MN=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+const DN=['อา','จ','อ','พ','พฤ','ศ','ส'];
+const COL=['#1d5fd1','#0b7f8c','#6b46c1','#c26a00','#c93b68','#1f8a4c'];
+const pad=n=>String(n).padStart(2,'0');
+const ymd=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const uid=()=>Math.random().toString(36).slice(2,9);
+const baht=n=>'฿'+Number(n||0).toLocaleString('th-TH');
+const tm=t=>{const[h,m]=(t||'0:0').split(':');return +h*60+ +m};
+const hm=n=>pad(Math.floor(n/60)%24)+':'+pad(n%60);
+const thDate=s=>{const d=new Date(s+'T00:00');return DN[d.getDay()]+' '+d.getDate()+' '+MN[d.getMonth()]+' '+(d.getFullYear()+543)};
+const KEY='clinic-v1';
+function seed(){const t=ymd(new Date()),d=new Date();d.setDate(d.getDate()+1);const n=ymd(d);
+return{patients:[{id:'p1',name:'สมชาย ใจดี',phone:'081-234-5678',note:'ปวดบ่า ไหล่'},{id:'p2',name:'วิภา รักสุข',phone:'089-111-2233',note:'แพ้น้ำมันหอมบางชนิด'}],
+therapists:[{id:'t1',name:'คุณสมศรี',color:COL[0]},{id:'t2',name:'คุณวิชัย',color:COL[2]},{id:'t3',name:'คุณมาลี',color:COL[3]}],
+services:[{id:'s1',name:'นวดแผนไทย',min:60,price:400},{id:'s2',name:'นวดน้ำมันอโรมา',min:90,price:700},{id:'s3',name:'นวดเท้า',min:60,price:350},{id:'s4',name:'ประคบสมุนไพร',min:30,price:200},{id:'s5',name:'นวดออฟฟิศซินโดรม',min:60,price:500}],
+appts:[{id:'a1',date:t,time:'10:00',pid:'p1',tid:'t1',sids:['s1','s4'],disc:0,status:'นัดแล้ว',note:''},{id:'a2',date:t,time:'13:30',pid:'p2',tid:'t3',sids:['s2'],disc:50,status:'นัดแล้ว',note:''},{id:'a3',date:n,time:'11:00',pid:'p1',tid:'t2',sids:['s5'],disc:0,status:'นัดแล้ว',note:''}]}}
+function load(){try{const r=localStorage.getItem(KEY);if(r)return JSON.parse(r)}catch(e){}return seed()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+let S=load(),V={tab:'cal',m:new Date(),sel:ymd(new Date())};
+V.m.setDate(1);
+const P=id=>S.patients.find(x=>x.id==id)||{name:'(ลบแล้ว)',phone:''};
+const T=id=>S.therapists.find(x=>x.id==id)||{name:'(ลบแล้ว)',color:'#888'};
+const SV=id=>S.services.find(x=>x.id==id);
+const dur=a=>a.sids.reduce((s,i)=>s+(SV(i)?SV(i).min:0),0)||60;
+const sub=a=>a.sids.reduce((s,i)=>s+(a.pr&&a.pr[i]!=null?+a.pr[i]:(SV(i)?SV(i).price:0)),0);
+const cost=a=>Math.max(0,sub(a)-(+a.disc||0));
+const live=a=>a.status!=='ยกเลิก';
+const byTime=(a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time);
+
+function render(){
+ const tabs=[['cal','ปฏิทิน'],['pat','ผู้ป่วย'],['ther','หมอนวด'],['svc','บริการ']];
+ $('#nav').innerHTML=tabs.map(([k,l])=>`<button data-a="tab" data-k="${k}" class="${V.tab==k?'on':''}">${l}</button>`).join('');
+ $('#hs').textContent='วันนี้ '+thDate(ymd(new Date()));
+ $('#main').innerHTML={cal:vCal,pat:vPat,ther:vTher,svc:vSvc}[V.tab]();
+}
+function vCal(){
+ const y=V.m.getFullYear(),mo=V.m.getMonth(),first=new Date(y,mo,1),start=new Date(y,mo,1-first.getDay()),today=ymd(new Date());
+ const mk=y+'-'+pad(mo+1);
+ const ma=S.appts.filter(a=>a.date.startsWith(mk));
+ let cells='';
+ for(let i=0;i<42;i++){const d=new Date(start);d.setDate(start.getDate()+i);const k=ymd(d);
+  const L=S.appts.filter(a=>a.date==k).sort(byTime);
+  cells+=`<button class="cell ${d.getMonth()!=mo?'out':''} ${k==today?'today':''} ${k==V.sel?'sel':''} ${L.length?'has':''}" data-a="pick" data-d="${k}">
+  <span class="n">${d.getDate()}</span>${L.slice(0,3).map(a=>`<span class="chip ${live(a)?'':'x'}" style="--c:${T(a.tid).color}">${a.time} ${esc(P(a.pid).name.split(' ')[0])}</span>`).join('')}${L.length>3?`<span class="more">+${L.length-3} รายการ</span>`:''}<span class="cnt">${L.length}</span></button>`;}
+ const L=S.appts.filter(a=>a.date==V.sel).sort(byTime);
+ return `<div class="wrap"><section class="card"><div class="bar"><h2>${MN[mo]} ${y+543}</h2>
+ <button class="btn" data-a="prev" aria-label="เดือนก่อน">‹</button><button class="btn" data-a="today">วันนี้</button><button class="btn" data-a="next" aria-label="เดือนถัดไป">›</button></div>
+ <div class="sum"><span>นัดเดือนนี้ <b>${ma.filter(live).length}</b> ครั้ง</span><span>รายได้รวม <b>${baht(ma.filter(live).reduce((s,a)=>s+cost(a),0))}</b></span></div>
+ <div class="lg">${S.therapists.map(t=>{const m=ma.filter(a=>live(a)&&a.tid==t.id);return `<div class="rv"><span class="tp" style="--c:${t.color}">${esc(t.name)}</span><b>${baht(m.reduce((s,a)=>s+cost(a),0))}</b><small>${m.length} นัดในเดือนนี้</small></div>`}).join('')}</div>
+ <div class="grid">${DN.map(d=>`<div class="dn">${d}</div>`).join('')}${cells}</div></section>
+ <aside class="card"><div class="bar"><h2>${thDate(V.sel)}</h2><button class="btn pri" data-a="addA">+ เพิ่มนัด</button></div>
+ ${L.length?L.map(a=>`<button class="ap" style="--c:${T(a.tid).color}" data-a="editA" data-id="${a.id}"><div class="t"><span>${a.time}–${hm(tm(a.time)+dur(a))} ${esc(P(a.pid).name)}</span><span>${baht(cost(a))}</span></div>
+ <div class="s">${a.sids.map(i=>esc(SV(i)?SV(i).name:'(ลบแล้ว)')).join(', ')}</div><div class="s"><span class="tp" style="--c:${T(a.tid).color}">${esc(T(a.tid).name)}</span> <span class="tag ${a.status=='เสร็จสิ้น'?'ok':a.status=='ยกเลิก'?'no':''}">${a.status}</span></div></button>`).join('')+
+ `<div class="tot"><span>รวมวันนี้ (${L.filter(live).length} นัด)</span><span>${baht(L.filter(live).reduce((s,a)=>s+cost(a),0))}</span></div>${rvRows(L)}`:'<div class="emp">ยังไม่มีนัดในวันนี้<br>กด “เพิ่มนัด” เพื่อเริ่ม</div>'}</aside></div>`;
+}
+function rvRows(L){return S.therapists.map(t=>{const m=L.filter(a=>live(a)&&a.tid==t.id);return m.length?`<div class="rr"><span class="tp" style="--c:${t.color}">${esc(t.name)}</span><span>${m.length} นัด</span><b>${baht(m.reduce((s,a)=>s+cost(a),0))}</b></div>`:''}).join('')}
+function vPat(){
+ return `<section class="card"><div class="bar"><h2>ผู้ป่วย (${S.patients.length})</h2><input id="q" placeholder="ค้นหาชื่อหรือเบอร์โทร" style="max-width:240px"><button class="btn pri" data-a="addP">+ ลงทะเบียนผู้ป่วย</button></div>
+ <div id="pl">${S.patients.map(p=>{const v=S.appts.filter(a=>a.pid==p.id&&live(a));return `<div class="row" data-s="${esc((p.name+p.phone).toLowerCase())}"><div class="g"><b>${esc(p.name)}</b> <span class="s">${esc(p.phone)}</span><div class="s">${esc(p.note)||'ไม่มีหมายเหตุ'} — มาแล้ว ${v.length} ครั้ง, ใช้จ่าย ${baht(v.reduce((s,a)=>s+cost(a),0))}</div></div>
+ <button class="btn" data-a="bookP" data-id="${p.id}">นัดใหม่</button><button class="btn" data-a="editP" data-id="${p.id}">แก้ไข</button></div>`}).join('')||'<div class="emp">ยังไม่มีผู้ป่วย</div>'}</div></section>`;
+}
+function vTher(){
+ return `<section class="card"><div class="bar"><h2>หมอนวด (${S.therapists.length})</h2><button class="btn pri" data-a="addT">+ เพิ่มหมอนวด</button></div>
+ ${S.therapists.map(t=>`<div class="row"><span class="dot" style="--c:${t.color}"></span><div class="g"><b>${esc(t.name)}</b><div class="s">เดือนนี้ ${baht(S.appts.filter(a=>a.tid==t.id&&live(a)&&a.date.startsWith(V.m.getFullYear()+'-'+pad(V.m.getMonth()+1))).reduce((s,a)=>s+cost(a),0))} — รวมทั้งหมด ${baht(S.appts.filter(a=>a.tid==t.id&&live(a)).reduce((s,a)=>s+cost(a),0))} (${S.appts.filter(a=>a.tid==t.id&&live(a)).length} นัด)</div></div><button class="btn" data-a="editT" data-id="${t.id}">แก้ไข</button></div>`).join('')}</section>`;
+}
+function vSvc(){
+ return `<section class="card"><div class="bar"><h2>รายการบริการ (${S.services.length})</h2><button class="btn pri" data-a="addS">+ เพิ่มบริการ</button></div>
+ ${S.services.map(s=>`<div class="row"><div class="g"><b>${esc(s.name)}</b><div class="s">${s.min} นาที</div></div><b>${baht(s.price)}</b><button class="btn" data-a="editS" data-id="${s.id}">แก้ไข</button></div>`).join('')}</section>`;
+}
+
+/* dialog helper */
+let onSave=null,onDel=null,armed=false;
+function dialog(title,body,save,del){
+ onSave=save;onDel=del;armed=false;
+ $('#dl').innerHTML=`<h3>${title}</h3>${body}<div class="warn" id="err"></div><div class="act">${del?'<button class="btn dng l" data-a="del">ลบ</button>':''}<button class="btn" data-a="close">ยกเลิก</button><button class="btn pri" data-a="save">บันทึก</button></div>`;
+ if(!$('#dlg').open)$('#dlg').showModal();
+}
+const val=id=>($('#'+id)||{}).value;
+const err=m=>{$('#err').textContent=m};
+const done=()=>{save();$('#dlg').close();render()};
+
+function formA(id,date,pid){
+ const a=id?S.appts.find(x=>x.id==id):{date:date||V.sel,time:'10:00',pid:pid||(S.patients[0]||{id:'new'}).id,tid:(S.therapists[0]||{}).id,sids:[],disc:0,status:'นัดแล้ว',note:''};
+ const opt=(arr,sel,f)=>arr.map(x=>`<option value="${x.id}" ${x.id==sel?'selected':''}>${esc(f(x))}</option>`).join('');
+ dialog(id?'แก้ไขนัด':'เพิ่มนัดใหม่',`
+ <div class="two"><div><label>วันที่</label><input type="date" id="fd" value="${a.date}"></div><div><label>เวลา</label><input type="time" id="ft" value="${a.time}" step="900"></div></div>
+ <label>ผู้ป่วย</label><select id="fp"><option value="new" ${a.pid=='new'?'selected':''}>+ ลงทะเบียนผู้ป่วยใหม่</option>${opt(S.patients,a.pid,p=>p.name+(p.phone?' ('+p.phone+')':''))}</select>
+ <div class="two" id="np" style="display:none"><div><label>ชื่อ-นามสกุล</label><input id="fn"></div><div><label>เบอร์โทร</label><input id="fh" type="tel"></div></div>
+ <label>หมอนวด</label><select id="fth">${opt(S.therapists,a.tid,t=>t.name)}</select>
+ <label>บริการ (เลือกได้หลายรายการ แก้ราคาในช่องได้เฉพาะนัดนี้)</label>${S.services.map(s=>`<label class="sv"><input type="checkbox" class="fs" value="${s.id}" ${a.sids.includes(s.id)?'checked':''}><span>${esc(s.name)} <small>${s.min} นาที</small></span><input type="number" class="fpr" data-s="${s.id}" min="0" value="${a.pr&&a.pr[s.id]!=null?a.pr[s.id]:s.price}" aria-label="ราคา ${esc(s.name)}"></label>`).join('')}
+ <div class="two"><div><label>ส่วนลด (บาท)</label><input type="number" id="fdc" min="0" value="${a.disc||0}"></div><div><label>สถานะ</label><select id="fst">${['นัดแล้ว','เสร็จสิ้น','ยกเลิก'].map(s=>`<option ${s==a.status?'selected':''}>${s}</option>`).join('')}</select></div></div>
+ <label>หมายเหตุ</label><textarea id="fno" rows="2">${esc(a.note)}</textarea>
+ <div class="calc" id="calc"></div>`,
+ ()=>{
+  let p=val('fp');
+  if(p=='new'){const n=val('fn').trim();if(!n)return err('กรอกชื่อผู้ป่วยใหม่');p=uid();S.patients.push({id:p,name:n,phone:val('fh').trim(),note:''})}
+  const sids=[...document.querySelectorAll('.fs:checked')].map(x=>x.value);
+  const pr={};document.querySelectorAll('.fpr').forEach(x=>{pr[x.dataset.s]=+x.value||0});
+  if(!sids.length)return err('เลือกบริการอย่างน้อย 1 รายการ');
+  if(!val('fd')||!val('ft'))return err('ระบุวันที่และเวลา');
+  if(!val('fth'))return err('เพิ่มหมอนวดก่อนในแท็บ “หมอนวด”');
+  const o={id:id||uid(),date:val('fd'),time:val('ft'),pid:p,tid:val('fth'),sids,pr,disc:+val('fdc')||0,status:val('fst'),note:val('fno').trim()};
+  if(id)S.appts[S.appts.findIndex(x=>x.id==id)]=o;else S.appts.push(o);
+  V.sel=o.date;const d=new Date(o.date+'T00:00');d.setDate(1);V.m=d;done()},
+ id?()=>{S.appts=S.appts.filter(x=>x.id!=id);done()}:null);
+ calc(id);
+}
+function calc(id){
+ const sids=[...document.querySelectorAll('.fs:checked')].map(x=>x.value);
+ const pr={};document.querySelectorAll('.fpr').forEach(x=>{pr[x.dataset.s]=+x.value||0});const a={sids,disc:+val('fdc')||0,pr};
+ $('#np').style.display=val('fp')=='new'?'grid':'none';
+ let w='';const s=tm(val('ft')),e=s+dur(a);
+ S.appts.forEach(o=>{if(o.id!=id&&live(o)&&o.date==val('fd')&&o.tid==val('fth')&&s<tm(o.time)+dur(o)&&tm(o.time)<e)w=`หมอนวดคนนี้มีนัดซ้อนเวลา ${o.time}–${hm(tm(o.time)+dur(o))} (${P(o.pid).name})`});
+ $('#calc').innerHTML=`<div><span>ค่าบริการ (${sids.length} รายการ, ${dur(a)} นาที)</span><span>${baht(sub(a))}</span></div><div><span>ส่วนลด</span><span>−${baht(a.disc)}</span></div><div class="g"><span>ยอดชำระ</span><span>${baht(cost(a))}</span></div>${w?`<div class="warn" style="display:block">${w}</div>`:''}`;
+}
+document.addEventListener('input',e=>{
+ if(e.target.id=='q'){const q=e.target.value.toLowerCase();document.querySelectorAll('#pl .row').forEach(r=>r.style.display=r.dataset.s.includes(q)?'':'none')}
+});
+let curId=null;
+function formP(id){const p=id?P(id):{name:'',phone:'',note:''};
+ dialog(id?'แก้ไขข้อมูลผู้ป่วย':'ลงทะเบียนผู้ป่วย',`<label>ชื่อ-นามสกุล</label><input id="pn" value="${esc(p.name)}"><label>เบอร์โทร</label><input id="ph" type="tel" value="${esc(p.phone)}"><label>หมายเหตุ (โรคประจำตัว, อาการแพ้, จุดที่ปวด)</label><textarea id="po" rows="3">${esc(p.note)}</textarea>`,
+ ()=>{if(!val('pn').trim())return err('กรอกชื่อผู้ป่วย');const o={id:id||uid(),name:val('pn').trim(),phone:val('ph').trim(),note:val('po').trim()};
+  if(id)S.patients[S.patients.findIndex(x=>x.id==id)]=o;else S.patients.push(o);done()},
+ id?()=>{S.patients=S.patients.filter(x=>x.id!=id);done()}:null)}
+function formT(id){const t=id?T(id):{name:'',color:COL[S.therapists.length%COL.length]};
+ dialog(id?'แก้ไขหมอนวด':'เพิ่มหมอนวด',`<label>ชื่อ</label><input id="tn" value="${esc(t.name)}"><label>สีในปฏิทิน</label><div style="display:flex;gap:8px;flex-wrap:wrap">${COL.map(c=>`<label class="sv" style="padding:6px 10px"><input type="radio" name="tc" value="${c}" ${c==t.color?'checked':''}><span class="dot" style="--c:${c}"></span></label>`).join('')}</div>`,
+ ()=>{if(!val('tn').trim())return err('กรอกชื่อ');const o={id:id||uid(),name:val('tn').trim(),color:(document.querySelector('[name=tc]:checked')||{}).value||COL[0]};
+  if(id)S.therapists[S.therapists.findIndex(x=>x.id==id)]=o;else S.therapists.push(o);done()},
+ id?()=>{S.therapists=S.therapists.filter(x=>x.id!=id);done()}:null)}
+function formS(id){const s=id?SV(id):{name:'',min:60,price:400};
+ dialog(id?'แก้ไขบริการ':'เพิ่มบริการ',`<label>ชื่อบริการ</label><input id="sn" value="${esc(s.name)}"><div class="two"><div><label>ระยะเวลา (นาที)</label><input id="sm" type="number" min="5" step="5" value="${s.min}"></div><div><label>ราคา (บาท)</label><input id="sp" type="number" min="0" value="${s.price}"></div></div>`,
+ ()=>{if(!val('sn').trim())return err('กรอกชื่อบริการ');const o={id:id||uid(),name:val('sn').trim(),min:+val('sm')||60,price:+val('sp')||0};
+  if(id)S.services[S.services.findIndex(x=>x.id==id)]=o;else S.services.push(o);done()},
+ id?()=>{S.services=S.services.filter(x=>x.id!=id);done()}:null)}
+
+/* a small fix: the appointment id for calc() while editing */
+const _formA=formA;formA=function(id,date,pid){curId=id;_formA(id,date,pid)};
+document.addEventListener('input',e=>{if($('#calc')&&e.target.closest('#dl')){calc(curId)}},true);
+document.addEventListener('change',e=>{if($('#calc')&&e.target.closest('#dl')){calc(curId)}});
+
+const A={
+ tab:d=>{V.tab=d.k;render()},
+ prev:()=>{V.m=new Date(V.m.getFullYear(),V.m.getMonth()-1,1);render()},
+ next:()=>{V.m=new Date(V.m.getFullYear(),V.m.getMonth()+1,1);render()},
+ today:()=>{V.m=new Date();V.m.setDate(1);V.sel=ymd(new Date());render()},
+ pick:d=>{V.sel=d.d;const x=new Date(d.d+'T00:00');if(x.getMonth()!=V.m.getMonth()){x.setDate(1);V.m=x}render()},
+ addA:()=>formA(null,V.sel),editA:d=>formA(d.id),
+ bookP:d=>formA(null,V.sel,d.id),
+ addP:()=>formP(),editP:d=>formP(d.id),addT:()=>formT(),editT:d=>formT(d.id),addS:()=>formS(),editS:d=>formS(d.id),
+ save:()=>onSave&&onSave(),close:()=>$('#dlg').close(),
+ del:e=>{const b=document.querySelector('[data-a=del]');if(!armed){armed=true;b.textContent='กดอีกครั้งเพื่อยืนยันลบ';return}onDel&&onDel()}
+};
+document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(t&&A[t.dataset.a])A[t.dataset.a](t.dataset)});
+render();
+</script>
+</body>
+</html>
